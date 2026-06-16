@@ -56,6 +56,15 @@ python main.py</code></pre>
     </section>
 
     <section class="card">
+      <h2>Visualização de Dados</h2>
+      <p>Escolha um arquivo CSV local (ou os dados padrão em <a href="data/energy_demand.csv">data/energy_demand.csv</a>):</p>
+      <input id="fileInput" type="file" accept="text/csv" />
+      <div style="height:360px;margin-top:1rem">
+        <canvas id="chartCanvas"></canvas>
+      </div>
+    </section>
+
+    <section class="card">
       <h2>Links úteis</h2>
       <ul>
         <li>README: <a href="README.md">README.md</a></li>
@@ -67,5 +76,73 @@ python main.py</code></pre>
   <footer>
     Atualizado automaticamente pelo assistente — diga o que quer adicionar aqui.
   </footer>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Parse CSV text into {labels:[], values:[]} expecting two columns (label,value)
+    function parseCsv(text){
+      const lines = text.split(/\r?\n/).map(l=>l.trim()).filter(Boolean);
+      if(lines.length===0) return {labels:[], values:[]};
+      const header = lines[0].split(/,|;|\t/).map(h=>h.trim());
+      const dataLines = lines.slice(1);
+      const labels = [];
+      const values = [];
+      for(const line of dataLines){
+        const parts = line.split(/,|;|\t/).map(p=>p.trim());
+        if(parts.length<2) continue;
+        labels.push(parts[0]);
+        const v = parseFloat(parts[1].replace(/[^0-9.+-eE]/g,''));
+        values.push(Number.isFinite(v)?v:NaN);
+      }
+      return {labels, values};
+    }
+
+    let chart = null;
+    function createChart(labels, values){
+      const ctx = document.getElementById('chartCanvas').getContext('2d');
+      if(chart) chart.destroy();
+      chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Energy demand',
+            data: values,
+            borderColor:'#0ea5a4',
+            backgroundColor:'rgba(14,165,164,0.08)',
+            tension:0.2,
+            pointRadius:2
+          }]
+        },
+        options: {
+          maintainAspectRatio:false,
+          scales: { x: { display:true }, y: { beginAtZero:false } }
+        }
+      });
+    }
+
+    // Try loading default CSV from data/energy_demand.csv
+    fetch('data/energy_demand.csv').then(r=>{
+      if(!r.ok) throw new Error('no default csv');
+      return r.text();
+    }).then(text=>{
+      const parsed = parseCsv(text);
+      createChart(parsed.labels, parsed.values);
+    }).catch(()=>{
+      // no default file available or fetch blocked — show empty chart
+      createChart([],[]);
+    });
+
+    // Handle local file upload
+    document.getElementById('fileInput').addEventListener('change', e=>{
+      const f = e.target.files && e.target.files[0];
+      if(!f) return;
+      const reader = new FileReader();
+      reader.onload = ev=>{
+        const parsed = parseCsv(String(ev.target.result||''));
+        createChart(parsed.labels, parsed.values);
+      };
+      reader.readAsText(f);
+    });
+  </script>
 </body>
 </html>
