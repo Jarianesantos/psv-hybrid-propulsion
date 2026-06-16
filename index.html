@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>PSV Hybrid Propulsion — Projeto</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;line-height:1.6;margin:0;background:#f7fafc;color:#0f172a}
+    header{background:#0ea5a4;color:white;padding:2rem 1rem}
+    .container{max-width:900px;margin:1.5rem auto;padding:0 1rem}
+    a{color:#0ea5a4}
+    pre{background:#0b1220;color:#e6f6f5;padding:1rem;border-radius:6px;overflow:auto}
+    .card{background:white;padding:1rem;border-radius:8px;box-shadow:0 1px 3px rgba(2,6,23,.06);margin-bottom:1rem}
+    footer{padding:1rem;text-align:center;color:#6b7280;font-size:.9rem}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>PSV Hybrid Propulsion</h1>
+      <p>Repositório de previsão de demanda energética para propulsão híbrida (exemplo educacional).</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Visão geral</h2>
+      <p>Este projeto contém um preprocessador, um modelo LSTM e scripts para gerar dados sintéticos e treinar/testar modelos.</p>
+      <ul>
+        <li>Dados: <a href="data/energy_demand.csv">data/energy_demand.csv</a></li>
+        <li>Scripts principais: <a href="generate_synthetic_data.py">generate_synthetic_data.py</a>, <a href="app.py">app.py</a>, <a href="main.py">main.py</a></li>
+        <li>Código do modelo: <a href="src/prediction/lstm_model.py">src/prediction/lstm_model.py</a></li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Como executar localmente</h2>
+      <p>Exemplo rápido para Windows PowerShell:</p>
+      <pre><code>python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+python app.py</code></pre>
+      <p>Ou execute scripts específicos:</p>
+      <pre><code>python generate_synthetic_data.py
+python main.py</code></pre>
+    </section>
+
+    <section class="card">
+      <h2>Página de demonstração (placeholder)</h2>
+      <p>Para agora esta página serve de README visual. Se quiser, posso adicionar:</p>
+      <ul>
+        <li>Upload/visualização do arquivo CSV e exibição de gráficos (Chart.js)</li>
+        <li>Formulário para treinar o modelo a partir do browser (via backend)</li>
+        <li>Página interativa com previsões usando o modelo treinado</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Links úteis</h2>
+      <ul>
+        <li>README: <a href="README.md">README.md</a></li>
+        <li>Licença: <a href="LICENSE">LICENSE</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    Atualizado automaticamente pelo assistente — diga o que quer adicionar aqui.
+  </footer>
+</body>
+</html>
