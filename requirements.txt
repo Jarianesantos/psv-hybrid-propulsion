@@ -18,7 +18,7 @@ cvxpy==1.4.1
 # Visualização
 plotly==5.22.0
 streamlit==1.32.0
-flask==3.0.0
+flask==3.1.3
 
 # Utilitários
 python-dotenv==1.0.1
